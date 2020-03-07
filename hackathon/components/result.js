@@ -5,16 +5,26 @@ const Result = ({results}) => {
     useEffect(() => {
       setBackground()
     });
-  Number()
     const setBackground = () => {
       let min = Number(results.target) - Number(results.variant);
       let max = Number(results.target) + Number(results.variant);
-      if(results.today >= min && results.today <= max) {
-        setBg("bg-green-500");
-      } else if ( results.today < min){
-        setBg("bg-blue-500");
-      } else {
-        setBg("bg-red-500")
+      if(results.label ==='Time Asleep' || results.label ==='Exercise Time'){
+        if(results.today >= min && results.today <= max) {
+          setBg("bg-green-500");
+        } else if ( results.today < min){
+          setBg("bg-red-500");
+        } else {
+          setBg("bg-blue-500")
+        }
+      }
+      else{
+        if(results.today >= min && results.today <= max) {
+          setBg("bg-green-500");
+        } else if ( results.today < min){
+          setBg("bg-blue-500");
+        } else {
+          setBg("bg-red-500")
+        }
       }
     }
     
