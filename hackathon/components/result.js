@@ -5,14 +5,14 @@ const Result = ({results}) => {
     useEffect(() => {
       setBackground()
     });
-  
+  Number()
     const setBackground = () => {
-      let min = results.target - results.variant;
-      let max = results.target + results.variant;
-  
-      if(results.total >= min && results.total <= max) {
+      let min = Number(results.target) - Number(results.variant);
+      let max = Number(results.target) + Number(results.variant);
+        console.log(min,max)
+      if(results.today >= min && results.today <= max) {
         setBg("bg-green-500");
-      } else if ( results.total < min){
+      } else if ( results.today < min){
         setBg("bg-blue-500");
       } else {
         setBg("bg-red-500")
@@ -21,7 +21,7 @@ const Result = ({results}) => {
     
     return (
       <div className={bg + " w-1/4 p-4 text-white"}>
-        <h2 className="text-3xl font-bold">{results.total}
+        <h2 className="text-3xl font-bold">{results.today}
           <div className="flex text-sm p-4">
             <div className="w-1/3">{results.target - results.variant}</div>
             <div className="w-1/3 font-bold">{results.target}</div>

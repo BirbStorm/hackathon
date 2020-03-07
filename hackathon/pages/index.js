@@ -3,18 +3,18 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import dayjs from 'dayjs'
 import Result from '../components/result';
-
+import Form from '../components/form'
 const Home = () => {
   let data = {
     calories: {
       label: "Calories",
-      total: 1840,
-      target: 1840,
+      today: 1840,
+      target: 1540,
       variant: 15
     },
     sleep: {
       label: "Sleep",
-      total: 8,
+      today: 8,
       target: 8,
       variant: 2
       // wake: '07:30:00',
@@ -22,18 +22,30 @@ const Home = () => {
     },
     weight: {
       label: "Weight",
-      total: 180,
+      today: 180,
       target: 150,
       variant: 20
     },
     exercise: {
       label: "Exercise",
-      total: 30,
+      today: 30,
       target: 60,
       variant: 10
     }
   }
   const [results, setResults] = useState(data)
+  const onChange = (e) => {
+    const data = { ...results };
+
+    let name = e.target.name;
+    console.log(name)
+    let resultType = name.split(" ")[0].toLowerCase();
+    let resultMacro = name.split(" ")[1].toLowerCase();
+    console.log(resultMacro,resultType)
+    data[resultMacro][resultType] = e.target.value;
+    console.log(data[resultMacro][resultType])
+    setResults(data);
+  }
   return (
   <div>
     <Head>
@@ -64,78 +76,10 @@ const Home = () => {
       </div>
 
       <div className="flex">
-        <div className="w-1/3">
-          <h2 className="text-3xl p-4">Current</h2>
-          <div className="p-4">
-            <label className="block">Calories</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Time Asleep</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Exercise Time</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Weight</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Save
-            </button>
-          </div>
-        </div>
-        <div className="w-1/3">
-          <h2 className="text-3xl p-4">Target</h2>
-          <div className="p-4">
-            <label className="block">Calories</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Time Asleep</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Exercise Time</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Weight</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Save
-            </button>
-          </div>
-        </div>
-        <div className="w-1/3">
-          <h2 className="text-3xl p-4">Variant</h2>
-          <div className="p-4">
-            <label className="block">Calories</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Time Asleep</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Exercise Time</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <label className="block">Weight</label>
-            <input type="number" className="bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></input>
-          </div>
-          <div className="p-4">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Save
-            </button>
-          </div>
-        </div>
+        <Form data={results} item="Today" onChange={onChange}/>
+        <Form data={results} item="Target" onChange={onChange}/>
+        <Form data={results} item="Variant" onChange={onChange}/>
+
 
       </div>
     </div>
