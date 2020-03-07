@@ -23,9 +23,9 @@ const Result = ({results}) => {
       <div className={bg + " w-1/4 p-4 text-white"}>
         <h2 className="text-3xl font-bold">{results.today}
           <div className="flex text-sm p-4">
-            <div className="w-1/3">{results.target - results.variant}</div>
+            <div className="w-1/3">{Number(results.target) - Number(results.variant)}</div>
             <div className="w-1/3 font-bold">{results.target}</div>
-            <div className="w-1/3">{results.target + results.variant}</div>
+            <div className="w-1/3">{Number(results.target) + Number(results.variant)}</div>
           </div>
         </h2>
         <h3 className="text-xl">{results.label}</h3>
