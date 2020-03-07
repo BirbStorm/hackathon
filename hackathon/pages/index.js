@@ -46,6 +46,23 @@ const Home = () => {
     console.log(data[resultMacro][resultType])
     setResults(data);
   }
+  const getDataForPreviousDay = async () => {
+    let currentDate = dayjs(results.date);
+    let newDate = currentDate.subtract(1, 'day').format('YYYY-MM-DDTHH:mm:ss')
+    const res = await fetch('http://localhost:3000/api/daily?date=' + newDate)
+    const json = await res.json()
+    
+    setResults(json);
+  }
+
+  const getDataForNextDay = async () => {
+    let currentDate = dayjs(results.date);
+    let newDate = currentDate.add(1, 'day').format('YYYY-MM-DDTHH:mm:ss')
+    const res = await fetch('http://localhost:3000/api/daily?date=' + newDate)
+    const json = await res.json()
+    
+    setResults(json);
+  }
   return (
   <div>
     <Head>
@@ -63,9 +80,9 @@ const Home = () => {
       </div>
       
       <div class="flex text-center">
-        <div class="w-1/3 bg-gray-200 p-4">Previous Day</div>
-        <div class="w-1/3 p-4">03/07/2020</div>
-        <div class="w-1/3 bg-gray-200 p-4">Next Day</div>
+        <div class="w-1/3 bg-gray-200 p-4"><button onClick={getDataForPreviousDay}>Previous Day</button></div>
+        <div class="w-1/3 p-4">{dayjs(results.date).format('MM/DD/YYYY')}</div>
+        <div class="w-1/3 bg-gray-200 p-4"><button onClick={getDataForNextDay}>Next Day</button></div>
       </div>
 
       <div className="flex mb-4 text-center">
@@ -85,6 +102,12 @@ const Home = () => {
     </div>
   </div>
   )
+}
+
+Home.getInitialProps = async () => {
+  const res = await fetch('http://localhost:3000/api/daily')
+  const json = await res.json()
+  return { data: json }
 }
 
 export default Home
