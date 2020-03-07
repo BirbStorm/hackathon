@@ -4,35 +4,8 @@ import fetch from 'isomorphic-unfetch'
 import dayjs from 'dayjs'
 import Result from '../components/result';
 import Form from '../components/form'
-const Home = () => {
-  let data = {
-    calories: {
-      label: "Calories",
-      today: 1840,
-      target: 1540,
-      variant: 15
-    },
-    sleep: {
-      label: "Sleep",
-      today: 8,
-      target: 8,
-      variant: 2
-      // wake: '07:30:00',
-      // sleep: '22:00:00'
-    },
-    weight: {
-      label: "Weight",
-      today: 180,
-      target: 150,
-      variant: 20
-    },
-    exercise: {
-      label: "Exercise",
-      today: 30,
-      target: 60,
-      variant: 10
-    }
-  }
+const Home = ({data}) => {
+  
   const [results, setResults] = useState(data)
   const onChange = (e) => {
     const data = { ...results };
@@ -54,9 +27,15 @@ const Home = () => {
     
     setResults(json);
   }
-
+  const updateMacros = async () => {
+    const res = await fetch('http://localhost:3000/api/daily', {
+      method: 'post',
+      body: JSON.stringify(results)
+    })
+  }
   const getDataForNextDay = async () => {
     let currentDate = dayjs(results.date);
+    console.log(currentDate)
     let newDate = currentDate.add(1, 'day').format('YYYY-MM-DDTHH:mm:ss')
     const res = await fetch('http://localhost:3000/api/daily?date=' + newDate)
     const json = await res.json()
@@ -96,8 +75,13 @@ const Home = () => {
         <Form data={results} item="Today" onChange={onChange}/>
         <Form data={results} item="Target" onChange={onChange}/>
         <Form data={results} item="Variant" onChange={onChange}/>
-
-
+      </div>
+      <div className="flex text-center">
+        <div className="w-full m-4">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={updateMacros}>
+              Save
+          </button>
+        </div>
       </div>
     </div>
   </div>
