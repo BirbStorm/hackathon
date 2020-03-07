@@ -51,10 +51,13 @@ const Home = ({data}) => {
     </Head>
 
     <div className="container mx-auto">
-
       <div className="flex text-center">
         <div className="w-full m-4">
-          <h1 className="text-4xl">Mother Goose Health Tracker</h1>
+        
+          <h1 className="text-4xl">
+          <img className="h-10 w-10 object-cover" src="/goose.png"></img>
+            Mother Goose Health Tracker
+          </h1>
         </div>
       </div>
       

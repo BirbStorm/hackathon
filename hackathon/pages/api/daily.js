@@ -8,7 +8,6 @@ handler.use(middleware);
 handler.get(async (req, res) => {
     const { date } = req.query;
     console.log(date)
-    // let test = await req.db.collection('health').findOne({date: new Date(date.subtract(1, 'day'))}).then(console.log(test))
     const dataModel = {
         "_id": new ObjectID(), 
         "date": date, 
