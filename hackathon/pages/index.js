@@ -11,14 +11,12 @@ const Home = ({data}) => {
     const data = { ...results };
 
     let name = e.target.name;
-    console.log(name)
     let resultType = name.split(" ")[0].toLowerCase();
     let resultMacro = name.split(" ")[1].toLowerCase();
-    console.log(resultMacro,resultType)
     data[resultMacro][resultType] = e.target.value;
-    console.log(data[resultMacro][resultType])
     setResults(data);
   }
+
   const getDataForPreviousDay = async () => {
     let currentDate = dayjs(results.date);
     let newDate = currentDate.subtract(1, 'day').format('YYYY-MM-DDTHH:mm:ss')
@@ -27,21 +25,23 @@ const Home = ({data}) => {
     
     setResults(json);
   }
-  const updateMacros = async () => {
-    const res = await fetch('http://localhost:3000/api/daily', {
-      method: 'post',
-      body: JSON.stringify(results)
-    })
-  }
+
   const getDataForNextDay = async () => {
     let currentDate = dayjs(results.date);
-    console.log(currentDate)
     let newDate = currentDate.add(1, 'day').format('YYYY-MM-DDTHH:mm:ss')
     const res = await fetch('http://localhost:3000/api/daily?date=' + newDate)
     const json = await res.json()
     
     setResults(json);
   }
+  
+  const updateMacros = async () => {
+    const res = await fetch('http://localhost:3000/api/daily', {
+      method: 'post',
+      body: JSON.stringify(results)
+    })
+  }
+
   return (
   <div>
     <Head>

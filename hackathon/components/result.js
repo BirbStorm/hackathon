@@ -9,7 +9,6 @@ const Result = ({results}) => {
     const setBackground = () => {
       let min = Number(results.target) - Number(results.variant);
       let max = Number(results.target) + Number(results.variant);
-        console.log(min,max)
       if(results.today >= min && results.today <= max) {
         setBg("bg-green-500");
       } else if ( results.today < min){
