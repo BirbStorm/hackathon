@@ -5,6 +5,7 @@ const handler = nextConnect();
 
 handler.use(middleware);
 
+//Create a data model with default variables
 handler.get(async (req, res) => {
     const { date } = req.query;
     console.log(date)
@@ -37,6 +38,8 @@ handler.get(async (req, res) => {
         }
     }
     let doc = {}
+    // If date in query exists then pull the information from that date 
+    // otherwise find a date to start at
     if(date){
         doc = await req.db.collection('health').findOne({date: new Date(date)})
     }

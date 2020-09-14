@@ -17,6 +17,7 @@ const Home = ({data}) => {
     setResults(data);
   }
 
+  //Get queries to get data and create new data
   const getDataForPreviousDay = async () => {
     let currentDate = dayjs(results.date);
     let newDate = currentDate.subtract(1, 'day').format('YYYY-MM-DDTHH:mm:ss')
